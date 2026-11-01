@@ -45,14 +45,18 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .stat strong{font-size:22px;display:block}
 .stat small{color:#786b71}
 .note{font-size:12px;color:#786b71;line-height:1.5}
-.preview{width:110px;height:110px;object-fit:cover;border-radius:12px;border:1px solid #f0dce4;margin-top:12px;background:#fff6f9}
 .upload-status{font-size:12px;color:#786b71;margin-top:8px;line-height:1.5}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.photo-item{position:relative}
+.photo-item img{width:100%;height:115px;object-fit:cover;border-radius:10px;border:1px solid #f0dce4}
+.photo-item button{position:absolute;top:5px;right:5px;padding:5px 8px;background:#21191d;color:white;font-size:11px}
 @media(max-width:550px){
 .grid{grid-template-columns:1fr}
 .wide{grid-column:auto}
 .product{align-items:flex-start}
 .product-actions{flex-direction:column}
 .panel{padding:16px}
+.photo-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
@@ -130,12 +134,12 @@ button:disabled{opacity:.55;cursor:not-allowed}
 </div>
 
 <div class="wide">
-<label>Choose product photo from your phone</label>
-<input id="imageFile" type="file" accept="image/*">
+<label>Choose product photos from your phone</label>
+<input id="imageFile" type="file" accept="image/*" multiple>
 <div class="upload-status" id="uploadStatus">
-Select a photo from your gallery. Maximum size: 10 MB.
+You can select multiple photos at once, or add photos in batches. Maximum 10 photos, 10 MB each.
 </div>
-<img id="imagePreview" class="preview hidden" alt="Product photo preview">
+<div id="photoPreviews" class="photo-grid"></div>
 </div>
 
 <div class="wide">
@@ -147,23 +151,22 @@ Select a photo from your gallery. Maximum size: 10 MB.
 
 <div class="actions">
 <button class="primary" id="saveButton">Save product</button>
-<button type="reset" class="light">Clear</button>
+<button type="button" id="clearButton" class="light">Clear</button>
 <button type="button" id="cancelEdit" class="light hidden">Cancel edit</button>
 </div>
 
 <div class="message" id="productMessage"></div>
-<p class="note">Your selected photo will be uploaded securely before the product is saved.</p>
+<p class="note">Photos are uploaded securely to Cloudinary before the product is saved.</p>
 </form>
 </section>
 
 <section class="panel">
 <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
 <h2>Your products</h2>
-<button class="light" id="refresh">Refresh</button>
+<button type="button" class="light" id="refresh">Refresh</button>
 </div>
 <div id="products">Loading products...</div>
 </section>
-
 </section>
 </main>
 
@@ -172,8 +175,8 @@ const el=id=>document.getElementById(id);
 
 let products=[];
 let editingId=null;
-let currentImageUrl="";
-let previewUrl="";
+let currentImages=[];
+let selectedFiles=[];
 
 async function api(path,options={}){
  const response=await fetch(path,{
@@ -210,12 +213,8 @@ function showLogin(){
 async function checkLogin(){
  try{
   const data=await api("/api/me");
-
-  if(data.authenticated){
-   showDashboard();
-  }else{
-   showLogin();
-  }
+  if(data.authenticated)showDashboard();
+  else showLogin();
  }catch(error){
   showLogin();
   el("loginMessage").textContent=error.message;
@@ -224,7 +223,6 @@ async function checkLogin(){
 
 el("loginForm").addEventListener("submit",async event=>{
  event.preventDefault();
-
  el("loginButton").disabled=true;
  el("loginMessage").textContent="Signing in...";
 
@@ -240,7 +238,6 @@ el("loginForm").addEventListener("submit",async event=>{
   el("password").value="";
   el("loginMessage").textContent="";
   showDashboard();
-
  }catch(error){
   el("loginMessage").textContent=error.message;
  }finally{
@@ -249,20 +246,13 @@ el("loginForm").addEventListener("submit",async event=>{
 });
 
 el("logout").addEventListener("click",async()=>{
- try{
-  await api("/api/logout",{method:"POST"});
- }catch(error){}
-
+ try{await api("/api/logout",{method:"POST"});}catch(error){}
  showLogin();
 });
 
 function safe(value){
  return String(value??"").replace(/[&<>"']/g,char=>({
-  "&":"&amp;",
-  "<":"&lt;",
-  ">":"&gt;",
-  '"':"&quot;",
-  "'":"&#39;"
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
  }[char]));
 }
 
@@ -275,11 +265,9 @@ async function loadProducts(){
 
  try{
   const data=await api("/api/products");
-
   products=data.products||[];
 
   el("count").textContent=products.length;
-
   el("stockCount").textContent=products.reduce(
    (total,p)=>total+Number(p.stock||0),0
   );
@@ -289,102 +277,147 @@ async function loadProducts(){
    return;
   }
 
-  el("products").innerHTML=products.map(p=>`
-   <div class="product">
-    <img class="thumb"
-     src="${safe(p.image_url||"")}"
-     onerror="this.style.visibility='hidden'"
-     alt="">
-    <div class="info">
-     <strong>${safe(p.name)}</strong>
-     <small>${safe(p.category)} · ${naira(p.price)} · Stock: ${Number(p.stock||0)}</small>
-    </div>
-    <div class="product-actions">
-     <button class="light" data-edit="${safe(p.id)}">Edit</button>
-     <button class="danger" data-delete="${safe(p.id)}">Delete</button>
-    </div>
-   </div>
-  `).join("");
+  el("products").innerHTML=products.map(p=>{
+   const images=Array.isArray(p.image_urls)?p.image_urls:[];
+   const firstImage=images[0]||p.image_url||"";
+
+   return `
+    <div class="product">
+     <img class="thumb" src="${safe(firstImage)}"
+      onerror="this.style.visibility='hidden'" alt="">
+     <div class="info">
+      <strong>${safe(p.name)}</strong>
+      <small>${safe(p.category)} · ${naira(p.price)} · Stock: ${Number(p.stock||0)}</small>
+     </div>
+     <div class="product-actions">
+      <button type="button" class="light" data-edit="${safe(p.id)}">Edit</button>
+      <button type="button" class="danger" data-delete="${safe(p.id)}">Delete</button>
+     </div>
+    </div>`;
+  }).join("");
 
  }catch(error){
   el("products").textContent=error.message;
  }
 }
 
-function clearPreview(){
- if(previewUrl){
-  URL.revokeObjectURL(previewUrl);
-  previewUrl="";
- }
-
- el("imagePreview").src="";
- el("imagePreview").classList.add("hidden");
+function revokeSelectedPreviews(){
+ selectedFiles.forEach(item=>{
+  URL.revokeObjectURL(item.preview);
+ });
+ selectedFiles=[];
 }
 
-function resetEditor(){
- editingId=null;
- currentImageUrl="";
+function renderPhotoPreviews(){
+ const area=el("photoPreviews");
+ area.innerHTML="";
 
- el("productForm").reset();
- clearPreview();
+ currentImages.forEach((url,index)=>{
+  const item=document.createElement("div");
+  item.className="photo-item";
+  item.innerHTML=`
+   <img src="${safe(url)}" alt="Existing product photo">
+   <button type="button" data-remove-existing="${index}">Remove</button>
+  `;
+  area.appendChild(item);
+ });
 
- el("uploadStatus").textContent="Select a photo from your gallery. Maximum size: 10 MB.";
- el("formTitle").textContent="Add a product";
- el("saveButton").textContent="Save product";
- el("cancelEdit").classList.add("hidden");
+ selectedFiles.forEach((file,index)=>{
+  const item=document.createElement("div");
+  item.className="photo-item";
+  item.innerHTML=`
+   <img src="${safe(file.preview)}" alt="New product photo">
+   <button type="button" data-remove-new="${index}">Remove</button>
+  `;
+  area.appendChild(item);
+ });
+
+ const total=currentImages.length+selectedFiles.length;
+ el("uploadStatus").textContent=
+  total+" photo(s) selected. You can add up to "+(10-total)+" more.";
 }
 
 el("imageFile").addEventListener("change",()=>{
- clearPreview();
+ const files=Array.from(el("imageFile").files||[]);
+ el("imageFile").value="";
 
- const file=el("imageFile").files[0];
+ if(!files.length)return;
 
- if(!file){
-  el("uploadStatus").textContent=currentImageUrl
-   ?"Current product photo will be kept."
-   :"No photo selected.";
-  return;
+ for(const file of files){
+  if(!file.type.startsWith("image/")){
+   el("productMessage").textContent="One file was not an image and was skipped.";
+   continue;
+  }
+
+  if(file.size>10*1024*1024){
+   el("productMessage").textContent=file.name+" is larger than 10 MB and was skipped.";
+   continue;
+  }
+
+  if(currentImages.length+selectedFiles.length>=10){
+   el("productMessage").textContent="You can upload a maximum of 10 photos per product.";
+   break;
+  }
+
+  selectedFiles.push({
+   file:file,
+   preview:URL.createObjectURL(file)
+  });
  }
 
- if(!file.type.startsWith("image/")){
-  el("imageFile").value="";
-  el("uploadStatus").textContent="Please select a valid image.";
-  return;
- }
-
- if(file.size>10*1024*1024){
-  el("imageFile").value="";
-  el("uploadStatus").textContent="Photo is too large. Maximum size is 10 MB.";
-  return;
- }
-
- previewUrl=URL.createObjectURL(file);
- el("imagePreview").src=previewUrl;
- el("imagePreview").classList.remove("hidden");
- el("uploadStatus").textContent="Photo selected: "+file.name;
+ renderPhotoPreviews();
 });
 
-async function uploadProductPhoto(file){
- if(!file)return currentImageUrl;
+el("photoPreviews").addEventListener("click",event=>{
+ const existing=event.target.closest("[data-remove-existing]");
+ const fresh=event.target.closest("[data-remove-new]");
 
+ if(existing){
+  currentImages.splice(Number(existing.dataset.removeExisting),1);
+  renderPhotoPreviews();
+ }
+
+ if(fresh){
+  const index=Number(fresh.dataset.removeNew);
+  URL.revokeObjectURL(selectedFiles[index].preview);
+  selectedFiles.splice(index,1);
+  renderPhotoPreviews();
+ }
+});
+
+function resetEditor(){
+ editingId=null;
+ currentImages=[];
+ revokeSelectedPreviews();
+
+ el("productForm").reset();
+ el("imageFile").value="";
+ el("photoPreviews").innerHTML="";
+ el("uploadStatus").textContent="You can select up to 10 photos.";
+ el("formTitle").textContent="Add a product";
+ el("saveButton").textContent="Save product";
+ el("cancelEdit").classList.add("hidden");
+ el("productMessage").textContent="";
+}
+
+async function uploadProductPhoto(file){
  if(!file.type.startsWith("image/")){
   throw new Error("Please select a valid image.");
  }
 
  if(file.size>10*1024*1024){
-  throw new Error("Image must be smaller than 10 MB.");
+  throw new Error(file.name+" is larger than 10 MB.");
  }
 
- el("uploadStatus").textContent="Preparing secure photo upload...";
+ el("uploadStatus").textContent="Preparing secure upload for "+file.name+"...";
 
- // Request a temporary signed upload from our protected Worker.
  const signed=await api("/api/cloudinary-signature",{
   method:"POST",
   body:JSON.stringify({})
  });
 
  if(!signed.cloud_name||!signed.api_key||!signed.timestamp||!signed.signature){
-  throw new Error("Photo upload settings are incomplete. Check the Cloudflare Worker configuration.");
+  throw new Error("Photo upload settings are incomplete. Check Cloudflare Worker configuration.");
  }
 
  const formData=new FormData();
@@ -393,23 +426,16 @@ async function uploadProductPhoto(file){
  formData.append("timestamp",String(signed.timestamp));
  formData.append("signature",signed.signature);
 
- el("uploadStatus").textContent="Uploading photo... Please wait.";
-
  const response=await fetch(
   "https://api.cloudinary.com/v1_1/"+encodeURIComponent(signed.cloud_name)+"/image/upload",
-  {
-   method:"POST",
-   body:formData
-  }
+  {method:"POST",body:formData}
  );
 
  const result=await response.json().catch(()=>({}));
 
  if(!response.ok||!result.secure_url){
-  throw new Error(result.error?.message||"Photo upload failed. Please try again.");
+  throw new Error(result.error?.message||"Photo upload failed.");
  }
-
- el("uploadStatus").textContent="Photo uploaded successfully.";
 
  return result.secure_url;
 }
@@ -420,28 +446,23 @@ el("products").addEventListener("click",async event=>{
 
  if(edit){
   const p=products.find(item=>String(item.id)===edit.dataset.edit);
-
   if(!p)return;
 
+  revokeSelectedPreviews();
   editingId=p.id;
-  currentImageUrl=p.image_url||"";
+
+  currentImages=Array.isArray(p.image_urls)&&p.image_urls.length
+   ?[...p.image_urls]
+   :(p.image_url?[p.image_url]:[]);
 
   el("name").value=p.name||"";
   el("category").value=p.category||"";
   el("price").value=p.price||"";
-  el("stock").value=p.stock||0;
+  el("stock").value=p.stock??0;
   el("description").value=p.description||"";
-
   el("imageFile").value="";
-  clearPreview();
 
-  if(currentImageUrl){
-   el("imagePreview").src=currentImageUrl;
-   el("imagePreview").classList.remove("hidden");
-   el("uploadStatus").textContent="Current photo shown. Choose another photo to replace it.";
-  }else{
-   el("uploadStatus").textContent="No current photo. Choose one from your gallery.";
-  }
+  renderPhotoPreviews();
 
   el("formTitle").textContent="Edit product";
   el("saveButton").textContent="Update product";
@@ -452,17 +473,12 @@ el("products").addEventListener("click",async event=>{
 
  if(remove){
   const p=products.find(item=>String(item.id)===remove.dataset.delete);
-
   if(!p||!confirm("Delete "+p.name+"?"))return;
 
   try{
-   await api("/api/products/"+encodeURIComponent(p.id),{
-    method:"DELETE"
-   });
-
+   await api("/api/products/"+encodeURIComponent(p.id),{method:"DELETE"});
    el("productMessage").textContent="Product deleted.";
    await loadProducts();
-
   }catch(error){
    el("productMessage").textContent=error.message;
   }
@@ -470,43 +486,53 @@ el("products").addEventListener("click",async event=>{
 });
 
 el("cancelEdit").addEventListener("click",resetEditor);
+el("clearButton").addEventListener("click",resetEditor);
 
 el("productForm").addEventListener("submit",async event=>{
  event.preventDefault();
 
- const file=el("imageFile").files[0];
+ const totalPhotos=currentImages.length+selectedFiles.length;
+
+ if(totalPhotos>10){
+  el("productMessage").textContent="Maximum 10 photos per product.";
+  return;
+ }
 
  const payload={
   name:el("name").value.trim(),
   category:el("category").value,
   price:Number(el("price").value),
   stock:Number(el("stock").value||0),
-  image_url:currentImageUrl,
-  description:el("description").value.trim()
+  description:el("description").value.trim(),
+  image_urls:[...currentImages],
+  image_url:currentImages[0]||""
  };
 
  el("saveButton").disabled=true;
  el("productMessage").textContent="";
 
  try{
-  if(file){
-   payload.image_url=await uploadProductPhoto(file);
+  for(let i=0;i<selectedFiles.length;i++){
+   el("uploadStatus").textContent=
+    "Uploading photo "+(i+1)+" of "+selectedFiles.length+"...";
+
+   const url=await uploadProductPhoto(selectedFiles[i].file);
+   payload.image_urls.push(url);
   }
+
+  payload.image_url=payload.image_urls[0]||"";
 
   if(editingId){
    await api("/api/products/"+encodeURIComponent(editingId),{
     method:"PUT",
     body:JSON.stringify(payload)
    });
-
    el("productMessage").textContent="Product updated successfully.";
-
   }else{
    await api("/api/products",{
     method:"POST",
     body:JSON.stringify(payload)
    });
-
    el("productMessage").textContent="Product added successfully.";
   }
 
