@@ -4,360 +4,414 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f8e9ef">
-<meta name="description" content="Lala Case's - Discover beautiful phone cases and tech accessories.">
-<title>Lala Case's | Accessories & Lifestyle</title>
+<meta name="theme-color" content="#f8e8ef">
+<meta name="description" content="Lala Case's - Premium phone cases and accessories.">
+<title>Lala Case's | Phone Accessories</title>
 
 <style>
-:root {
- --pink:#f2dce5;
- --pink-dark:#bd7893;
- --light:#fff8fa;
- --black:#171416;
- --grey:#82777c;
- --border:#eee3e8;
-}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;color:var(--black);background:#fff}
-button,input{font:inherit}
-button{cursor:pointer}
-.top{
- background:var(--black);color:#fff;text-align:center;
- padding:11px;font-size:10px;letter-spacing:2px
+body{
+font-family:Arial,sans-serif;
+background:#fff;
+color:#171717;
 }
 header{
- position:sticky;top:0;z-index:10;background:#fff;
- border-bottom:1px solid var(--border)
+background:#f8e8ef;
+padding:18px 5%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+position:sticky;
+top:0;
+z-index:10;
 }
-.nav{
- max-width:1250px;margin:auto;padding:17px 5%;
- display:flex;align-items:center;justify-content:space-between
+.logo{
+font-size:23px;
+font-weight:900;
+letter-spacing:1px;
 }
-.logo{font-family:Georgia,serif;font-size:25px;font-weight:bold;letter-spacing:1px}
-.logo span{color:var(--pink-dark)}
-.nav-actions{display:flex;gap:10px}
-.nav button{
- background:#fff;border:1px solid var(--border);
- padding:11px 15px;border-radius:25px;font-size:11px
+.logo span{color:#c45c83}
+.header-links{
+display:flex;
+align-items:center;
+gap:18px;
+}
+.header-links a{
+text-decoration:none;
+color:#171717;
+font-size:14px;
+font-weight:bold;
+}
+.tiktok{
+font-size:22px;
+}
+.cart-button{
+border:0;
+background:#171717;
+color:white;
+padding:11px 16px;
+border-radius:25px;
+font-weight:bold;
+cursor:pointer;
 }
 .hero{
- min-height:480px;padding:65px 8%;
- display:flex;align-items:center;justify-content:space-between;gap:25px;
- background:linear-gradient(120deg,#f6e1e9,#fff8fa 65%,#f0d6e0)
+background:#f8e8ef;
+text-align:center;
+padding:65px 20px;
 }
-.hero-content{max-width:590px}
-.eyebrow{font-size:11px;letter-spacing:4px;color:#ad6682;margin-bottom:20px;font-weight:bold}
-.hero h1{font:normal clamp(45px,7vw,78px)/1.05 Georgia,serif;margin-bottom:22px}
-.hero h1 em{color:var(--pink-dark)}
-.hero p{max-width:420px;color:#756970;line-height:1.9;font-size:14px;margin-bottom:28px}
-.dark-btn{
- background:var(--black);color:white;border:0;
- padding:16px 26px;font-size:11px;letter-spacing:2px
+.hero h1{
+font-size:38px;
+margin-bottom:12px;
 }
-.hero-art{
- width:310px;height:310px;max-width:40vw;border-radius:50%;
- display:flex;align-items:center;justify-content:center;
- background:radial-gradient(circle,#fff 0 30%,#f0ceda 31% 60%,#e8bacb 61%);
- font-size:120px;box-shadow:0 20px 55px #bb819333
+.hero p{
+color:#555;
+font-size:15px;
+margin-bottom:23px;
 }
-.features{
- display:grid;grid-template-columns:repeat(3,1fr);
- padding:23px 5%;text-align:center;border-bottom:1px solid var(--border)
+.shop-btn{
+display:inline-block;
+background:#171717;
+color:white;
+text-decoration:none;
+padding:14px 28px;
+border-radius:30px;
+font-weight:bold;
 }
-.feature strong{font-size:11px;display:block;margin-bottom:7px}
-.feature small{font-size:10px;color:var(--grey)}
-.section{max-width:1250px;margin:auto;padding:65px 5%}
-.heading{text-align:center;margin-bottom:35px}
-.heading small{color:var(--pink-dark);letter-spacing:3px;font-weight:bold;font-size:10px}
-.heading h2{font:normal 36px Georgia,serif;margin-top:12px}
-.categories{
- display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-bottom:25px
+.section{
+padding:40px 5%;
 }
-.category{
- padding:11px 18px;background:white;border:1px solid var(--border);
- border-radius:30px;font-size:11px
+.section h2{
+font-size:25px;
+margin-bottom:8px;
 }
-.category.active,.category:hover{background:var(--black);color:white}
-.search{
- display:block;width:min(100%,420px);margin:0 auto 35px;
- padding:14px 18px;border:1px solid var(--border);
- border-radius:30px;outline:none
+.subtitle{
+color:#777;
+font-size:14px;
+margin-bottom:25px;
 }
-.products{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
-.product{min-width:0}
-.product-image{
- height:260px;position:relative;overflow:hidden;
- background:linear-gradient(145deg,#faedf2,#efd5df);
- display:flex;align-items:center;justify-content:center
+.products{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:15px;
 }
-.product-image img{width:100%;height:100%;object-fit:cover}
-.product-image .emoji{font-size:90px}
-.tag{
- position:absolute;top:13px;left:13px;background:white;
- padding:7px 10px;font-size:9px;letter-spacing:1px
+.product{
+border:1px solid #eee;
+border-radius:12px;
+overflow:hidden;
+background:#fff;
 }
-.product-info{padding:15px 2px}
-.product-info h3{font-size:14px;margin-bottom:9px}
-.price{font-size:14px;font-weight:bold}
-.old-price{font-size:11px;color:#999;text-decoration:line-through;margin-left:7px}
-.product-info small{display:block;color:var(--grey);margin-top:6px}
+.product img{
+width:100%;
+height:180px;
+object-fit:cover;
+background:#f8e8ef;
+}
+.product-info{padding:12px}
+.product h3{
+font-size:15px;
+margin-bottom:7px;
+}
+.product p{
+font-size:13px;
+color:#777;
+margin-bottom:10px;
+}
+.price{
+font-weight:bold;
+font-size:16px;
+margin-bottom:12px;
+}
 .add-btn{
- width:100%;padding:13px;background:white;border:1px solid var(--black);
- margin-top:14px;font-size:10px;letter-spacing:2px
+width:100%;
+padding:12px;
+border:0;
+background:#171717;
+color:white;
+border-radius:7px;
+font-weight:bold;
+cursor:pointer;
 }
-.add-btn:hover{background:var(--black);color:white}
-.empty{grid-column:1/-1;text-align:center;padding:35px;color:var(--grey)}
-.about{background:var(--light);padding:70px 8%;text-align:center}
-.about h2{font:normal 36px Georgia,serif;margin-bottom:18px}
-.about p{max-width:620px;margin:auto;color:var(--grey);font-size:14px;line-height:1.9}
-.newsletter{text-align:center;padding:55px 5%}
-.newsletter h2{font:normal 30px Georgia,serif;margin-bottom:12px}
-.newsletter p{font-size:13px;color:var(--grey)}
-footer{background:var(--black);color:white;text-align:center;padding:40px 20px}
-footer p{font-size:10px;color:#c9bdc2;line-height:2}
-footer .logo{margin-bottom:12px}
-.cart{
- position:fixed;right:-430px;top:0;width:min(400px,100%);
- height:100%;background:white;z-index:31;padding:24px;
- transition:right .3s;overflow:auto;box-shadow:-10px 0 35px #0002
+.add-btn:active{background:#c45c83}
+.empty{
+padding:25px;
+text-align:center;
+color:#777;
 }
-.cart.open{right:0}
-.overlay{display:none;position:fixed;inset:0;background:#0006;z-index:30}
-.overlay.show{display:block}
-.cart-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:18px}
-.cart-head h2{font:normal 25px Georgia,serif}
-.close{border:0;background:none;font-size:26px}
-.cart-item{display:flex;justify-content:space-between;gap:10px;padding:18px 0;border-bottom:1px solid var(--border);font-size:12px}
-.quantity{display:flex;align-items:center;gap:10px;margin-top:10px}
-.quantity button{width:27px;height:27px;border:1px solid var(--border);background:white}
-.total{display:flex;justify-content:space-between;padding:22px 0;font-weight:bold}
-.checkout{width:100%;padding:16px;background:var(--black);color:white;border:0;font-size:11px;letter-spacing:1px}
-.cart-note{font-size:11px;color:var(--grey);line-height:1.6;margin-top:14px}
-@media(max-width:700px){
- .hero{min-height:370px;padding:48px 6%}
- .hero-art{width:30vw;height:30vw;font-size:65px}
- .hero h1{font-size:46px}
- .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
- .product-image{height:190px}
- .product-image .emoji{font-size:65px}
- .section{padding:48px 5%}
- .heading h2{font-size:30px}
+.cart-panel{
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+z-index:30;
 }
-@media(max-width:420px){
- .hero-art{width:25vw;height:25vw;font-size:45px}
- .hero h1{font-size:40px}
- .product-image{height:155px}
- .features{padding:18px 2%}
- .feature strong{font-size:9px}
- .feature small{font-size:9px}
+.cart-content{
+position:absolute;
+right:0;
+top:0;
+height:100%;
+width:min(390px,90%);
+background:white;
+padding:22px;
+overflow-y:auto;
+}
+.cart-heading{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+.close{
+border:0;
+background:none;
+font-size:27px;
+cursor:pointer;
+}
+.cart-item{
+padding:13px 0;
+border-bottom:1px solid #eee;
+display:flex;
+justify-content:space-between;
+gap:10px;
+font-size:14px;
+}
+.quantity{
+display:flex;
+gap:10px;
+align-items:center;
+margin-top:8px;
+}
+.quantity button{
+padding:4px 9px;
+border:1px solid #ddd;
+background:white;
+cursor:pointer;
+}
+.total{
+display:flex;
+justify-content:space-between;
+font-weight:bold;
+margin:25px 0;
+font-size:18px;
+}
+.checkout{
+width:100%;
+background:#c45c83;
+color:white;
+border:0;
+padding:15px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+footer{
+background:#171717;
+color:white;
+text-align:center;
+padding:30px 15px;
+margin-top:40px;
+}
+footer a{color:#f4b8d0;text-decoration:none}
+@media(min-width:700px){
+.products{grid-template-columns:repeat(4,minmax(0,1fr))}
+.product img{height:240px}
+.hero h1{font-size:52px}
 }
 </style>
 </head>
 
 <body>
 
-<div class="top">WELCOME TO LALA CASE'S — STYLE YOUR EVERYDAY</div>
-
 <header>
- <div class="nav">
-  <div class="logo">LALA <span>CASE'S</span></div>
-  <div class="nav-actions">
-   <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP</button>
-   <button onclick="openCart()">BAG (<span id="count">0</span>)</button>
-  </div>
- </div>
+<div class="logo">LALA <span>CASE'S</span></div>
+
+<div class="header-links">
+<a class="tiktok" href="https://www.tiktok.com/@lala.cases2" target="_blank" rel="noopener" aria-label="TikTok">♪</a>
+<button class="cart-button" onclick="openCart()">
+CART (<span id="cartCount">0</span>)
+</button>
+</div>
 </header>
 
 <section class="hero">
- <div class="hero-content">
-  <div class="eyebrow">THE ACCESSORY COLLECTION</div>
-  <h1>Style meets <em>personality.</em></h1>
-  <p>Beautiful phone cases and everyday tech accessories designed to make your devices look as good as you do.</p>
-  <button class="dark-btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP COLLECTION</button>
- </div>
- <div class="hero-art">♡</div>
+<h1>Style Your Devices.</h1>
+<p>Beautiful cases and accessories for your everyday lifestyle.</p>
+<a href="#shop" class="shop-btn">SHOP NOW</a>
 </section>
-
-<div class="features">
- <div class="feature"><strong>♡ BEAUTIFUL DESIGNS</strong><small>Style your devices</small></div>
- <div class="feature"><strong>✧ EVERYDAY ESSENTIALS</strong><small>Accessories you need</small></div>
- <div class="feature"><strong>♡ EASY ORDERING</strong><small>Order on WhatsApp</small></div>
-</div>
 
 <section class="section" id="shop">
- <div class="heading">
-  <small>DISCOVER OUR COLLECTION</small>
-  <h2>Shop your favourites</h2>
- </div>
+<h2>Our Collection</h2>
+<p class="subtitle">Discover your favourite accessories.</p>
 
- <div class="categories">
-  <button class="category active" onclick="filter('All',this)">All</button>
-  <button class="category" onclick="filter('Phone Cases',this)">Phone Cases</button>
-  <button class="category" onclick="filter('iPad Cases',this)">iPad Cases</button>
-  <button class="category" onclick="filter('Chargers',this)">Chargers</button>
- </div>
-
- <input class="search" id="search" placeholder="Search our collection..." oninput="render()">
- <div class="products" id="products"></div>
+<div class="products" id="products">
+<div class="empty">Loading products...</div>
+</div>
 </section>
 
-<section class="about">
- <h2>A little something for your style.</h2>
- <p>Welcome to Lala Case's, your destination for stylish phone cases and everyday tech accessories. We believe your devices should express your personality. Find something beautiful, make it yours and enjoy every detail.</p>
-</section>
+<div class="cart-panel" id="cartPanel" onclick="closeCart(event)">
+<div class="cart-content" onclick="event.stopPropagation()">
+<div class="cart-heading">
+<h2>My Cart</h2>
+<button class="close" onclick="closeCart()">×</button>
+</div>
 
-<section class="newsletter">
- <h2>Let's stay connected.</h2>
- <p>Have a question or need help choosing an accessory? Chat with us directly on WhatsApp.</p>
- <br>
- <button class="dark-btn" onclick="contactUs()">CONTACT US</button>
-</section>
+<div id="cartItems">
+<div class="empty">Your cart is empty.</div>
+</div>
+
+<div class="total">
+<span>Total</span>
+<span id="cartTotal">₦0</span>
+</div>
+
+<button class="checkout" onclick="checkout()">ORDER VIA WHATSAPP</button>
+</div>
+</div>
 
 <footer>
- <div class="logo">LALA <span>CASE'S</span></div>
- <p>STYLE YOUR DEVICE. EXPRESS YOURSELF.</p>
- <p>© <span id="year"></span> Lala Case's. All rights reserved.</p>
+<h3>LALA CASE'S</h3>
+<p style="margin:12px 0">Accessories that match your style.</p>
+<p><a href="https://www.tiktok.com/@lala.cases2" target="_blank" rel="noopener">Follow us on TikTok</a></p>
+<p style="margin-top:15px;font-size:12px;color:#aaa">© 2026 Lala Case's. All rights reserved.</p>
 </footer>
 
-<div class="overlay" id="overlay" onclick="closeCart()"></div>
-
-<aside class="cart" id="cart">
- <div class="cart-head">
-  <h2>Your shopping bag</h2>
-  <button class="close" onclick="closeCart()">×</button>
- </div>
- <div id="cart-items"></div>
- <div class="total"><span>Total</span><span id="total">₦0</span></div>
- <button class="checkout" onclick="checkout()">ORDER VIA WHATSAPP</button>
- <p class="cart-note">Your order will be sent directly to Lala Case's WhatsApp for confirmation.</p>
-</aside>
-
 <script>
-const WHATSAPP_NUMBER = "2349044413054";
+const WHATSAPP_NUMBER = "2348081040811";
 
-const products = [
- {id:1,name:"Elegant Phone Case",category:"Phone Cases",price:8500,oldPrice:10000,emoji:"📱",tag:"SALE"},
- {id:2,name:"Premium Protective Case",category:"Phone Cases",price:10000,oldPrice:0,emoji:"💗",tag:"NEW"},
- {id:3,name:"Luxury iPad Case",category:"iPad Cases",price:18000,oldPrice:22000,emoji:"📔",tag:"SALE"},
- {id:4,name:"Classic iPad Cover",category:"iPad Cases",price:16000,oldPrice:0,emoji:"✨",tag:""},
- {id:5,name:"Fast Charging Adapter",category:"Chargers",price:12000,oldPrice:15000,emoji:"🔌",tag:"SALE"},
- {id:6,name:"Charging Cable",category:"Chargers",price:6500,oldPrice:0,emoji:"⚡",tag:""}
-];
+let products = [];
+let cart = [];
 
-let cartItems=[];
-let activeCategory="All";
-
-function money(n){
- return "₦"+n.toLocaleString("en-NG");
+function money(value){
+return "₦" + Number(value || 0).toLocaleString("en-NG");
 }
 
-function render(){
- const term=document.getElementById("search").value.toLowerCase();
- const list=products.filter(p=>
-  (activeCategory==="All"||p.category===activeCategory)&&
-  p.name.toLowerCase().includes(term)
- );
- const area=document.getElementById("products");
- if(!list.length){
-  area.innerHTML='<div class="empty">No products found.</div>';
-  return;
- }
- area.innerHTML=list.map(p=>`
-  <article class="product">
-   <div class="product-image">
-    ${p.tag?`<span class="tag">${p.tag}</span>`:""}
-    <span class="emoji">${p.emoji}</span>
-   </div>
-   <div class="product-info">
-    <h3>${p.name}</h3>
-    <span class="price">${money(p.price)}</span>
-    ${p.oldPrice?`<span class="old-price">${money(p.oldPrice)}</span>`:""}
-    <small>${p.category}</small>
-    <button class="add-btn" onclick="add(${p.id})">ADD TO BAG +</button>
-   </div>
-  </article>
- `).join("");
+async function loadProducts(){
+const container = document.getElementById("products");
+
+try{
+const response = await fetch("/api/products");
+
+if(!response.ok) throw new Error("Products unavailable");
+
+const data = await response.json();
+products = Array.isArray(data) ? data : (data.products || []);
+
+if(!products.length){
+container.innerHTML = '<div class="empty">No products available yet. Please check back soon.</div>';
+return;
 }
 
-function filter(category,button){
- activeCategory=category;
- document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
- button.classList.add("active");
- render();
+container.innerHTML = products.map((p,i)=>`
+<div class="product">
+<img src="${escapeHTML(p.image_url || p.image || '')}" alt="${escapeHTML(p.name)}" onerror="this.style.display='none'">
+<div class="product-info">
+<h3>${escapeHTML(p.name)}</h3>
+<p>${escapeHTML(p.description || '')}</p>
+<div class="price">${money(p.price)}</div>
+<button class="add-btn" onclick="addToCart(${i})">ADD TO CART</button>
+</div>
+</div>
+`).join("");
+
+}catch(error){
+container.innerHTML = '<div class="empty">Unable to load products. Please try again later.</div>';
+}
 }
 
-function add(id){
- const p=products.find(x=>x.id===id);
- const existing=cartItems.find(x=>x.id===id);
- if(existing)existing.quantity++;
- else cartItems.push({...p,quantity:1});
- updateCart();
- openCart();
+function escapeHTML(value){
+return String(value ?? "").replace(/[&<>"']/g,c=>({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+}[c]));
 }
 
-function updateCart(){
- document.getElementById("count").textContent=
- cartItems.reduce((s,p)=>s+p.quantity,0);
+function addToCart(index){
+const product = products[index];
+if(!product) return;
 
- document.getElementById("cart-items").innerHTML=cartItems.length?
- cartItems.map(p=>`
-  <div class="cart-item">
-   <div>
-    <strong>${p.name}</strong><br>${money(p.price)}
-    <div class="quantity">
-     <button onclick="changeQty(${p.id},-1)">−</button>
-     <span>${p.quantity}</span>
-     <button onclick="changeQty(${p.id},1)">+</button>
-    </div>
-   </div>
-   <strong>${money(p.price*p.quantity)}</strong>
-  </div>
- `).join(""):'<p style="padding:25px 0;color:#82777c">Your shopping bag is empty.</p>';
+const existing = cart.find(item=>String(item.id)===String(product.id));
 
- const total=cartItems.reduce((s,p)=>s+p.price*p.quantity,0);
- document.getElementById("total").textContent=money(total);
+if(existing){
+existing.quantity++;
+}else{
+cart.push({...product,quantity:1});
 }
 
-function changeQty(id,amount){
- const item=cartItems.find(p=>p.id===id);
- if(!item)return;
- item.quantity+=amount;
- if(item.quantity<=0)cartItems=cartItems.filter(p=>p.id!==id);
- updateCart();
+renderCart();
+document.getElementById("cartCount").textContent =
+cart.reduce((sum,item)=>sum+item.quantity,0);
+
+alert(product.name + " added to cart!");
+}
+
+function renderCart(){
+const container = document.getElementById("cartItems");
+
+if(!cart.length){
+container.innerHTML='<div class="empty">Your cart is empty.</div>';
+}else{
+container.innerHTML=cart.map((item,index)=>`
+<div class="cart-item">
+<div>
+<strong>${escapeHTML(item.name)}</strong>
+<div>${money(item.price)}</div>
+<div class="quantity">
+<button onclick="changeQuantity(${index},-1)">−</button>
+<span>${item.quantity}</span>
+<button onclick="changeQuantity(${index},1)">+</button>
+</div>
+</div>
+<strong>${money(Number(item.price)*item.quantity)}</strong>
+</div>
+`).join("");
+}
+
+const total=cart.reduce((sum,item)=>sum+Number(item.price)*item.quantity,0);
+document.getElementById("cartTotal").textContent=money(total);
+document.getElementById("cartCount").textContent=
+cart.reduce((sum,item)=>sum+item.quantity,0);
+}
+
+function changeQuantity(index,amount){
+if(!cart[index]) return;
+cart[index].quantity+=amount;
+if(cart[index].quantity<=0) cart.splice(index,1);
+renderCart();
 }
 
 function openCart(){
- document.getElementById("cart").classList.add("open");
- document.getElementById("overlay").classList.add("show");
-}
-function closeCart(){
- document.getElementById("cart").classList.remove("open");
- document.getElementById("overlay").classList.remove("show");
+document.getElementById("cartPanel").style.display="block";
 }
 
-function contactUs(){
- const message="Hello Lala Case's! I would like to make an enquiry.";
- window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),"_blank");
+function closeCart(event){
+if(event && event.target.id!=="cartPanel") return;
+document.getElementById("cartPanel").style.display="none";
 }
 
 function checkout(){
- if(!cartItems.length){
-  alert("Your shopping bag is empty.");
-  return;
- }
- const lines=cartItems.map(p=>
-  p.name+" x "+p.quantity+" = "+money(p.price*p.quantity)
- );
- const total=cartItems.reduce((s,p)=>s+p.price*p.quantity,0);
- const message="Hello Lala Case's! I would like to place an order:\n\n"+
- lines.join("\n")+"\n\nTOTAL: "+money(total)+
- "\n\nPlease let me know how to complete my order.";
- window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),"_blank");
+if(!cart.length){
+alert("Your cart is empty.");
+return;
 }
 
-document.getElementById("year").textContent=new Date().getFullYear();
-render();
-updateCart();
+let message="Hello Lala Case's! I would like to place an order:\n\n";
+
+cart.forEach(item=>{
+message+=item.name+" x "+item.quantity+
+" = "+money(Number(item.price)*item.quantity)+"\n";
+});
+
+const total=cart.reduce((sum,item)=>sum+Number(item.price)*item.quantity,0);
+
+message+="\nTotal: "+money(total);
+message+="\n\nPlease provide payment and delivery details.";
+
+window.open(
+"https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),
+"_blank"
+);
+}
+
+loadProducts();
 </script>
+
 </body>
 </html>
