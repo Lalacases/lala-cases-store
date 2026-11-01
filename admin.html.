@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8e8ef">
+<title>Lala Case's Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#fffafb;color:#21191d;font-family:Arial,sans-serif}
+header{padding:18px;background:white;border-bottom:1px solid #f0dce4;display:flex;justify-content:space-between;align-items:center}
+.brand{font-weight:bold;letter-spacing:2px}.brand small{display:block;color:#b85f85;font-size:10px;margin-top:5px}
+main{max-width:850px;margin:25px auto;padding:0 15px}
+.panel{background:white;border:1px solid #f0dce4;border-radius:16px;padding:20px;margin-bottom:18px}
+.login{max-width:420px;margin:9vh auto}
+h1{font-size:25px;margin:8px 0}
+h2{font-size:19px;margin:0}
+.sub{color:#786b71;font-size:14px;line-height:1.5}
+.eyebrow{font-size:11px;letter-spacing:2px;color:#b85f85;font-weight:bold}
+label{display:block;font-size:12px;font-weight:bold;margin:14px 0 7px}
+input,select,textarea{width:100%;padding:13px;border:1px solid #f0dce4;border-radius:9px;font-size:14px;background:white}
+textarea{min-height:75px}
+button{padding:12px 16px;border:0;border-radius:9px;background:#21191d;color:white;font-weight:bold;cursor:pointer}
+.primary{background:#b85f85}.light{background:#fff6f9;color:#21191d;border:1px solid #f0dce4}
+.danger{background:#fff0f1;color:#a32c3b}
+.full{width:100%;margin-top:18px}
+.hidden{display:none!important}
+.message{color:#b85f85;font-size:13px;margin-top:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}
+.wide{grid-column:1/-1}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}
+.product{display:flex;align-items:center;gap:12px;border:1px solid #f0dce4;border-radius:12px;padding:12px;margin-top:10px}
+.thumb{width:60px;height:60px;object-fit:cover;border-radius:9px;background:#fff6f9}
+.info{flex:1;min-width:0}.info strong{font-size:14px}.info small{display:block;color:#786b71;margin-top:5px}
+.product-actions{display:flex;gap:6px}
+.stats{display:flex;gap:10px;margin:15px 0}
+.stat{background:#fff6f9;border:1px solid #f0dce4;border-radius:10px;padding:13px;flex:1}
+.stat strong{font-size:22px;display:block}
+.stat small{color:#786b71}
+.note{font-size:12px;color:#786b71;line-height:1.5}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}.product{align-items:flex-start}.product-actions{flex-direction:column}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<header>
+<div class="brand">LALA CASE'S<small>ADMINISTRATION</small></div>
+<button id="logout" class="light hidden">Log out</button>
+</header>
+
+<main>
+<section id="login" class="panel login">
+<div class="eyebrow">PRIVATE STORE ACCESS</div>
+<h1>Welcome back</h1>
+<p class="sub">Sign in to manage your store.</p>
+<form id="loginForm">
+<label>Admin username</label>
+<input id="username" value="lalaadmin" required autocomplete="username">
+<label>Password</label>
+<input id="password" type="password" required autocomplete="current-password">
+<button class="primary full" id="loginButton">Sign in</button>
+<div class="message" id="loginMessage"></div>
+</form>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="eyebrow">STORE CONTROL</div>
+<h1>Product dashboard</h1>
+<p class="sub">Manage your Lala Case's products.</p>
+
+<div class="stats">
+<div class="stat"><strong id="count">0</strong><small>Products</small></div>
+<div class="stat"><strong id="stockCount">0</strong><small>Total stock</small></div>
+</div>
+
+<section class="panel">
+<h2 id="formTitle">Add a product</h2>
+<form id="productForm">
+<div class="grid">
+<div class="wide">
+<label>Product name</label>
+<input id="name" required placeholder="e.g. Pink iPhone case">
+</div>
+<div>
+<label>Category</label>
+<select id="category" required>
+<option value="">Choose category</option>
+<option>Phone Cases</option>
+<option>iPad Cases</option>
+<option>Chargers</option>
+</select>
+</div>
+<div>
+<label>Price (₦)</label>
+<input id="price" type="number" min="0" required>
+</div>
+<div>
+<label>Stock quantity</label>
+<input id="stock" type="number" min="0" value="1">
+</div>
+<div>
+<label>Product image URL</label>
+<input id="image" type="url" placeholder="https://...">
+</div>
+<div class="wide">
+<label>Description</label>
+<textarea id="description" placeholder="Describe your product"></textarea>
+</div>
+</div>
+<div class="actions">
+<button class="primary" id="saveButton">Save product</button>
+<button type="reset" class="light">Clear</button>
+<button type="button" id="cancelEdit" class="light hidden">Cancel edit</button>
+</div>
+<div class="message" id="productMessage"></div>
+<p class="note">Image URLs are supported for now. We will add direct photo uploads from your phone in a later step.</p>
+</form>
+</section>
+
+<section class="panel">
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+<h2>Your products</h2>
+<button class="light" id="refresh">Refresh</button>
+</div>
+<div id="products">Loading products...</div>
+</section>
+</section>
+</main>
+
+<script>
+const el=id=>document.getElementById(id);
+let products=[];
+let editingId=null;
+
+async function api(path,options={}){
+ const response=await fetch(path,{
+  ...options,
+  credentials:"same-origin",
+  headers:{"Content-Type":"application/json",...(options.headers||{})}
+ });
+ const data=await response.json().catch(()=>({}));
+ if(!response.ok)throw new Error(data.error||"Request failed");
+ return data;
+}
+
+function showDashboard(){
+ el("login").classList.add("hidden");
+ el("dashboard").classList.remove("hidden");
+ el("logout").classList.remove("hidden");
+ loadProducts();
+}
+
+function showLogin(){
+ el("dashboard").classList.add("hidden");
+ el("login").classList.remove("hidden");
+ el("logout").classList.add("hidden");
+}
+
+async function checkLogin(){
+ try{
+  const data=await api("/api/me");
+  if(data.authenticated)showDashboard();
+  else showLogin();
+ }catch(error){
+  showLogin();
+  el("loginMessage").textContent=error.message;
+ }
+}
+
+el("loginForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ el("loginButton").disabled=true;
+ el("loginMessage").textContent="Signing in...";
+ try{
+  await api("/api/login",{
+   method:"POST",
+   body:JSON.stringify({
+    username:el("username").value.trim(),
+    password:el("password").value
+   })
+  });
+  el("password").value="";
+  el("loginMessage").textContent="";
+  showDashboard();
+ }catch(error){
+  el("loginMessage").textContent=error.message;
+ }finally{
+  el("loginButton").disabled=false;
+ }
+});
+
+el("logout").addEventListener("click",async()=>{
+ try{await api("/api/logout",{method:"POST"});}catch(error){}
+ showLogin();
+});
+
+function safe(value){
+ return String(value??"").replace(/[&<>"']/g,char=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[char]));
+}
+
+function naira(value){
+ return "₦"+Number(value||0).toLocaleString("en-NG");
+}
+
+async function loadProducts(){
+ el("products").textContent="Loading...";
+ try{
+  const data=await api("/api/products");
+  products=data.products||[];
+  el("count").textContent=products.length;
+  el("stockCount").textContent=products.reduce((total,p)=>total+Number(p.stock||0),0);
+
+  if(!products.length){
+   el("products").textContent="No products added yet.";
+   return;
+  }
+
+  el("products").innerHTML=products.map(p=>`
+   <div class="product">
+    <img class="thumb" src="${safe(p.image_url)}" onerror="this.style.visibility='hidden'">
+    <div class="info">
+     <strong>${safe(p.name)}</strong>
+     <small>${safe(p.category)} · ${naira(p.price)} · Stock: ${Number(p.stock||0)}</small>
+    </div>
+    <div class="product-actions">
+     <button class="light" data-edit="${safe(p.id)}">Edit</button>
+     <button class="danger" data-delete="${safe(p.id)}">Delete</button>
+    </div>
+   </div>
+  `).join("");
+ }catch(error){
+  el("products").textContent=error.message;
+ }
+}
+
+function resetEditor(){
+ editingId=null;
+ el("productForm").reset();
+ el("formTitle").textContent="Add a product";
+ el("saveButton").textContent="Save product";
+ el("cancelEdit").classList.add("hidden");
+}
+
+el("products").addEventListener("click",async event=>{
+ const edit=event.target.closest("[data-edit]");
+ const remove=event.target.closest("[data-delete]");
+
+ if(edit){
+  const p=products.find(item=>item.id===edit.dataset.edit);
+  if(!p)return;
+  editingId=p.id;
+  el("name").value=p.name||"";
+  el("category").value=p.category||"";
+  el("price").value=p.price||"";
+  el("stock").value=p.stock||0;
+  el("image").value=p.image_url||"";
+  el("description").value=p.description||"";
+  el("formTitle").textContent="Edit product";
+  el("saveButton").textContent="Update product";
+  el("cancelEdit").classList.remove("hidden");
+  el("productForm").scrollIntoView({behavior:"smooth"});
+ }
+
+ if(remove){
+  const p=products.find(item=>item.id===remove.dataset.delete);
+  if(!p||!confirm("Delete "+p.name+"?"))return;
+  try{
+   await api("/api/products/"+encodeURIComponent(p.id),{method:"DELETE"});
+   el("productMessage").textContent="Product deleted.";
+   await loadProducts();
+  }catch(error){
+   el("productMessage").textContent=error.message;
+  }
+ }
+});
+
+el("cancelEdit").addEventListener("click",resetEditor);
+
+el("productForm").addEventListener("submit",async event=>{
+ event.preventDefault();
+ const payload={
+  name:el("name").value.trim(),
+  category:el("category").value,
+  price:Number(el("price").value),
+  stock:Number(el("stock").value||0),
+  image_url:el("image").value.trim(),
+  description:el("description").value.trim()
+ };
+
+ el("saveButton").disabled=true;
+ try{
+  if(editingId){
+   await api("/api/products/"+encodeURIComponent(editingId),{
+    method:"PUT",body:JSON.stringify(payload)
+   });
+   el("productMessage").textContent="Product updated.";
+  }else{
+   await api("/api/products",{
+    method:"POST",body:JSON.stringify(payload)
+   });
+   el("productMessage").textContent="Product added.";
+  }
+  resetEditor();
+  await loadProducts();
+ }catch(error){
+  el("productMessage").textContent=error.message;
+ }finally{
+  el("saveButton").disabled=false;
+ }
+});
+
+el("refresh").addEventListener("click",loadProducts);
+checkLogin();
+</script>
+</body>
+</html>
