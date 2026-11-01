@@ -1,9 +1,18 @@
 
 {
   "name": "lala-cases-store",
+  "main": "src/index.js",
   "compatibility_date": "2026-11-01",
   "assets": {
     "directory": "./",
-    "binding": "ASSETS"
-  }
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lala-cases-db",
+      "database_id": "REPLACE_WITH_YOUR_DATABASE_ID"
+    }
+  ]
 }
