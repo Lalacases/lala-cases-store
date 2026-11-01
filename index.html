@@ -3,529 +3,360 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f8e8ed">
-<meta name="description" content="Lala Case's - Beautiful phone cases and accessories.">
-<title>Lala Case's | Accessories Store</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f8e9ef">
+<meta name="description" content="Lala Case's - Discover beautiful phone cases and tech accessories.">
+<title>Lala Case's | Accessories & Lifestyle</title>
 
 <style>
 :root {
-  --pink:#f4dce5;
-  --soft:#fff7fa;
-  --dark:#171416;
-  --muted:#81777b;
-  --white:#fff;
-  --border:#eee4e8;
+ --pink:#f2dce5;
+ --pink-dark:#bd7893;
+ --light:#fff8fa;
+ --black:#171416;
+ --grey:#82777c;
+ --border:#eee3e8;
 }
-* {box-sizing:border-box;margin:0;padding:0}
-body {
-  font-family:Arial,Helvetica,sans-serif;
-  background:#fff;
-  color:var(--dark);
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;color:var(--black);background:#fff}
+button,input{font:inherit}
+button{cursor:pointer}
+.top{
+ background:var(--black);color:#fff;text-align:center;
+ padding:11px;font-size:10px;letter-spacing:2px
 }
-button,input {font:inherit}
-button {cursor:pointer}
-.topbar {
-  background:var(--dark);
-  color:white;
-  text-align:center;
-  padding:10px;
-  font-size:11px;
-  letter-spacing:2px;
+header{
+ position:sticky;top:0;z-index:10;background:#fff;
+ border-bottom:1px solid var(--border)
 }
-header {
-  background:rgba(255,255,255,.96);
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:0;
-  z-index:10;
+.nav{
+ max-width:1250px;margin:auto;padding:17px 5%;
+ display:flex;align-items:center;justify-content:space-between
 }
-.nav {
-  max-width:1200px;
-  margin:auto;
-  padding:18px 5%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
+.logo{font-family:Georgia,serif;font-size:25px;font-weight:bold;letter-spacing:1px}
+.logo span{color:var(--pink-dark)}
+.nav-actions{display:flex;gap:10px}
+.nav button{
+ background:#fff;border:1px solid var(--border);
+ padding:11px 15px;border-radius:25px;font-size:11px
 }
-.logo {
-  font-family:Georgia,serif;
-  font-size:25px;
-  font-weight:bold;
-  letter-spacing:1px;
+.hero{
+ min-height:480px;padding:65px 8%;
+ display:flex;align-items:center;justify-content:space-between;gap:25px;
+ background:linear-gradient(120deg,#f6e1e9,#fff8fa 65%,#f0d6e0)
 }
-.logo span {color:#c77e99}
-.nav-actions {display:flex;gap:10px;align-items:center}
-.nav-btn {
-  border:1px solid var(--border);
-  background:white;
-  padding:10px 14px;
-  border-radius:30px;
-  font-size:12px;
+.hero-content{max-width:590px}
+.eyebrow{font-size:11px;letter-spacing:4px;color:#ad6682;margin-bottom:20px;font-weight:bold}
+.hero h1{font:normal clamp(45px,7vw,78px)/1.05 Georgia,serif;margin-bottom:22px}
+.hero h1 em{color:var(--pink-dark)}
+.hero p{max-width:420px;color:#756970;line-height:1.9;font-size:14px;margin-bottom:28px}
+.dark-btn{
+ background:var(--black);color:white;border:0;
+ padding:16px 26px;font-size:11px;letter-spacing:2px
 }
-.hero {
-  background:linear-gradient(120deg,#f8e7ed,#fff8fa 65%,#f2dce5);
-  min-height:430px;
-  padding:75px 7%;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:30px;
+.hero-art{
+ width:310px;height:310px;max-width:40vw;border-radius:50%;
+ display:flex;align-items:center;justify-content:center;
+ background:radial-gradient(circle,#fff 0 30%,#f0ceda 31% 60%,#e8bacb 61%);
+ font-size:120px;box-shadow:0 20px 55px #bb819333
 }
-.hero-content {max-width:570px}
-.eyebrow {
-  font-size:11px;
-  letter-spacing:4px;
-  color:#a65c78;
-  margin-bottom:20px;
-  font-weight:bold;
+.features{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ padding:23px 5%;text-align:center;border-bottom:1px solid var(--border)
 }
-.hero h1 {
-  font-family:Georgia,serif;
-  font-size:clamp(42px,7vw,76px);
-  line-height:1.05;
-  font-weight:normal;
-  margin-bottom:20px;
+.feature strong{font-size:11px;display:block;margin-bottom:7px}
+.feature small{font-size:10px;color:var(--grey)}
+.section{max-width:1250px;margin:auto;padding:65px 5%}
+.heading{text-align:center;margin-bottom:35px}
+.heading small{color:var(--pink-dark);letter-spacing:3px;font-weight:bold;font-size:10px}
+.heading h2{font:normal 36px Georgia,serif;margin-top:12px}
+.categories{
+ display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-bottom:25px
 }
-.hero h1 span {color:#bc718d;font-style:italic}
-.hero p {
-  color:#6f6268;
-  font-size:15px;
-  line-height:1.8;
-  max-width:420px;
-  margin-bottom:28px;
+.category{
+ padding:11px 18px;background:white;border:1px solid var(--border);
+ border-radius:30px;font-size:11px
 }
-.primary-btn {
-  background:var(--dark);
-  color:white;
-  border:0;
-  padding:15px 25px;
-  border-radius:3px;
-  font-size:11px;
-  letter-spacing:2px;
-  text-transform:uppercase;
+.category.active,.category:hover{background:var(--black);color:white}
+.search{
+ display:block;width:min(100%,420px);margin:0 auto 35px;
+ padding:14px 18px;border:1px solid var(--border);
+ border-radius:30px;outline:none
 }
-.hero-art {
-  width:min(38%,330px);
-  aspect-ratio:1;
-  border-radius:50%;
-  background:radial-gradient(circle,#fff 0 28%,#f0cbd9 29% 55%,#e6b9ca 56%);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-size:110px;
-  box-shadow:0 20px 55px #c98da333;
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.product{min-width:0}
+.product-image{
+ height:260px;position:relative;overflow:hidden;
+ background:linear-gradient(145deg,#faedf2,#efd5df);
+ display:flex;align-items:center;justify-content:center
 }
-.features {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  border-bottom:1px solid var(--border);
-  padding:22px 5%;
-  text-align:center;
-  gap:10px;
+.product-image img{width:100%;height:100%;object-fit:cover}
+.product-image .emoji{font-size:90px}
+.tag{
+ position:absolute;top:13px;left:13px;background:white;
+ padding:7px 10px;font-size:9px;letter-spacing:1px
 }
-.feature strong {font-size:12px;display:block;margin-bottom:6px}
-.feature span {font-size:11px;color:var(--muted)}
-.section {
-  max-width:1200px;
-  margin:auto;
-  padding:65px 5%;
+.product-info{padding:15px 2px}
+.product-info h3{font-size:14px;margin-bottom:9px}
+.price{font-size:14px;font-weight:bold}
+.old-price{font-size:11px;color:#999;text-decoration:line-through;margin-left:7px}
+.product-info small{display:block;color:var(--grey);margin-top:6px}
+.add-btn{
+ width:100%;padding:13px;background:white;border:1px solid var(--black);
+ margin-top:14px;font-size:10px;letter-spacing:2px
 }
-.section-heading {text-align:center;margin-bottom:32px}
-.section-heading small {
-  color:#b66d88;
-  letter-spacing:3px;
-  font-size:10px;
-  font-weight:bold;
+.add-btn:hover{background:var(--black);color:white}
+.empty{grid-column:1/-1;text-align:center;padding:35px;color:var(--grey)}
+.about{background:var(--light);padding:70px 8%;text-align:center}
+.about h2{font:normal 36px Georgia,serif;margin-bottom:18px}
+.about p{max-width:620px;margin:auto;color:var(--grey);font-size:14px;line-height:1.9}
+.newsletter{text-align:center;padding:55px 5%}
+.newsletter h2{font:normal 30px Georgia,serif;margin-bottom:12px}
+.newsletter p{font-size:13px;color:var(--grey)}
+footer{background:var(--black);color:white;text-align:center;padding:40px 20px}
+footer p{font-size:10px;color:#c9bdc2;line-height:2}
+footer .logo{margin-bottom:12px}
+.cart{
+ position:fixed;right:-430px;top:0;width:min(400px,100%);
+ height:100%;background:white;z-index:31;padding:24px;
+ transition:right .3s;overflow:auto;box-shadow:-10px 0 35px #0002
 }
-.section-heading h2 {
-  font-family:Georgia,serif;
-  font-size:36px;
-  font-weight:normal;
-  margin-top:10px;
+.cart.open{right:0}
+.overlay{display:none;position:fixed;inset:0;background:#0006;z-index:30}
+.overlay.show{display:block}
+.cart-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:18px}
+.cart-head h2{font:normal 25px Georgia,serif}
+.close{border:0;background:none;font-size:26px}
+.cart-item{display:flex;justify-content:space-between;gap:10px;padding:18px 0;border-bottom:1px solid var(--border);font-size:12px}
+.quantity{display:flex;align-items:center;gap:10px;margin-top:10px}
+.quantity button{width:27px;height:27px;border:1px solid var(--border);background:white}
+.total{display:flex;justify-content:space-between;padding:22px 0;font-weight:bold}
+.checkout{width:100%;padding:16px;background:var(--black);color:white;border:0;font-size:11px;letter-spacing:1px}
+.cart-note{font-size:11px;color:var(--grey);line-height:1.6;margin-top:14px}
+@media(max-width:700px){
+ .hero{min-height:370px;padding:48px 6%}
+ .hero-art{width:30vw;height:30vw;font-size:65px}
+ .hero h1{font-size:46px}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+ .product-image{height:190px}
+ .product-image .emoji{font-size:65px}
+ .section{padding:48px 5%}
+ .heading h2{font-size:30px}
 }
-.categories {
-  display:flex;
-  justify-content:center;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-bottom:28px;
-}
-.category {
-  background:white;
-  border:1px solid var(--border);
-  padding:11px 18px;
-  border-radius:30px;
-  font-size:12px;
-}
-.category.active,.category:hover {
-  background:var(--dark);
-  color:white;
-}
-.search {
-  display:block;
-  width:min(100%,420px);
-  margin:0 auto 35px;
-  border:1px solid var(--border);
-  padding:14px 18px;
-  border-radius:30px;
-  outline:none;
-}
-.products {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-}
-.product {min-width:0}
-.product-image {
-  height:260px;
-  background:linear-gradient(145deg,#f8e9ef,#f1d4df);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:hidden;
-}
-.product-image .symbol {
-  font-size:85px;
-  filter:drop-shadow(0 12px 10px #8b526633);
-}
-.product-image .tag {
-  position:absolute;
-  top:14px;
-  left:14px;
-  background:white;
-  padding:7px 10px;
-  font-size:9px;
-  letter-spacing:1px;
-}
-.product-info {padding:16px 2px}
-.product-info h3 {font-size:14px;margin-bottom:9px}
-.price {font-weight:bold;font-size:14px}
-.old-price {
-  color:#a49a9e;
-  text-decoration:line-through;
-  font-size:11px;
-  margin-left:7px;
-}
-.add-btn {
-  width:100%;
-  padding:13px;
-  background:white;
-  border:1px solid var(--dark);
-  margin-top:14px;
-  font-size:10px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-}
-.add-btn:hover {background:var(--dark);color:white}
-.empty {
-  grid-column:1/-1;
-  text-align:center;
-  color:var(--muted);
-  padding:30px;
-}
-.about {
-  background:var(--soft);
-  text-align:center;
-  padding:65px 8%;
-}
-.about h2 {
-  font:normal 36px Georgia,serif;
-  margin-bottom:15px;
-}
-.about p {
-  max-width:600px;
-  margin:auto;
-  color:#71656a;
-  line-height:1.8;
-  font-size:14px;
-}
-footer {
-  background:var(--dark);
-  color:white;
-  text-align:center;
-  padding:38px 20px;
-}
-footer .logo {margin-bottom:12px}
-footer p {font-size:11px;color:#c8bdc1;line-height:2}
-.cart-panel {
-  position:fixed;
-  z-index:30;
-  right:-420px;
-  top:0;
-  height:100%;
-  width:min(400px,100%);
-  background:white;
-  box-shadow:-10px 0 40px #0002;
-  transition:right .3s;
-  padding:25px;
-  overflow:auto;
-}
-.cart-panel.open {right:0}
-.cart-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  border-bottom:1px solid var(--border);
-  padding-bottom:18px;
-}
-.cart-head h2 {font:normal 25px Georgia,serif}
-.close {
-  border:0;
-  background:none;
-  font-size:25px;
-}
-.cart-item {
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:18px 0;
-  border-bottom:1px solid var(--border);
-  font-size:13px;
-}
-.quantity {display:flex;gap:10px;align-items:center;margin-top:8px}
-.quantity button {
-  width:25px;height:25px;
-  border:1px solid var(--border);
-  background:white;
-}
-.cart-total {
-  display:flex;
-  justify-content:space-between;
-  padding:22px 0;
-  font-weight:bold;
-}
-.checkout {
-  width:100%;
-  background:#171416;
-  color:white;
-  border:0;
-  padding:16px;
-  letter-spacing:1px;
-  font-size:11px;
-}
-.overlay {
-  display:none;
-  position:fixed;
-  inset:0;
-  background:#0006;
-  z-index:20;
-}
-.overlay.show {display:block}
-@media(max-width:700px) {
-  .hero {padding:55px 7%;min-height:370px}
-  .hero-art {width:32%;font-size:65px}
-  .products {grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-  .product-image {height:190px}
-  .product-image .symbol {font-size:65px}
-  .section {padding:48px 5%}
-  .section-heading h2 {font-size:30px}
-  .logo {font-size:21px}
-}
-@media(max-width:420px) {
-  .hero-art {width:28%;font-size:48px}
-  .hero h1 {font-size:42px}
-  .features {padding:18px 2%}
-  .feature strong {font-size:10px}
-  .feature span {font-size:9px}
-  .product-image {height:160px}
+@media(max-width:420px){
+ .hero-art{width:25vw;height:25vw;font-size:45px}
+ .hero h1{font-size:40px}
+ .product-image{height:155px}
+ .features{padding:18px 2%}
+ .feature strong{font-size:9px}
+ .feature small{font-size:9px}
 }
 </style>
 </head>
 
 <body>
-<div class="topbar">A LITTLE STYLE. A LOT OF PERSONALITY.</div>
+
+<div class="top">WELCOME TO LALA CASE'S — STYLE YOUR EVERYDAY</div>
 
 <header>
-  <div class="nav">
-    <div class="logo">LALA <span>CASE'S</span></div>
-    <div class="nav-actions">
-      <button class="nav-btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP</button>
-      <button class="nav-btn" onclick="openCart()">BAG (<span id="cart-count">0</span>)</button>
-    </div>
+ <div class="nav">
+  <div class="logo">LALA <span>CASE'S</span></div>
+  <div class="nav-actions">
+   <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP</button>
+   <button onclick="openCart()">BAG (<span id="count">0</span>)</button>
   </div>
+ </div>
 </header>
 
 <section class="hero">
-  <div class="hero-content">
-    <div class="eyebrow">THE ACCESSORY EDIT</div>
-    <h1>Make it <span>yours.</span></h1>
-    <p>Discover beautiful phone cases and everyday tech accessories that bring style and personality to your everyday life.</p>
-    <button class="primary-btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Explore collection</button>
-  </div>
-  <div class="hero-art">♡</div>
+ <div class="hero-content">
+  <div class="eyebrow">THE ACCESSORY COLLECTION</div>
+  <h1>Style meets <em>personality.</em></h1>
+  <p>Beautiful phone cases and everyday tech accessories designed to make your devices look as good as you do.</p>
+  <button class="dark-btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">SHOP COLLECTION</button>
+ </div>
+ <div class="hero-art">♡</div>
 </section>
 
 <div class="features">
-  <div class="feature"><strong>♡ STYLE FIRST</strong><span>Accessories you'll love</span></div>
-  <div class="feature"><strong>✧ EVERYDAY ESSENTIALS</strong><span>Made for your lifestyle</span></div>
-  <div class="feature"><strong>♡ EASY ORDERING</strong><span>Order directly on WhatsApp</span></div>
+ <div class="feature"><strong>♡ BEAUTIFUL DESIGNS</strong><small>Style your devices</small></div>
+ <div class="feature"><strong>✧ EVERYDAY ESSENTIALS</strong><small>Accessories you need</small></div>
+ <div class="feature"><strong>♡ EASY ORDERING</strong><small>Order on WhatsApp</small></div>
 </div>
 
 <section class="section" id="shop">
-  <div class="section-heading">
-    <small>SHOP THE COLLECTION</small>
-    <h2>Find your favourite</h2>
-  </div>
+ <div class="heading">
+  <small>DISCOVER OUR COLLECTION</small>
+  <h2>Shop your favourites</h2>
+ </div>
 
-  <div class="categories">
-    <button class="category active" onclick="filterProducts('All',this)">All</button>
-    <button class="category" onclick="filterProducts('Phone Cases',this)">Phone Cases</button>
-    <button class="category" onclick="filterProducts('iPad Cases',this)">iPad Cases</button>
-    <button class="category" onclick="filterProducts('Chargers',this)">Chargers</button>
-  </div>
+ <div class="categories">
+  <button class="category active" onclick="filter('All',this)">All</button>
+  <button class="category" onclick="filter('Phone Cases',this)">Phone Cases</button>
+  <button class="category" onclick="filter('iPad Cases',this)">iPad Cases</button>
+  <button class="category" onclick="filter('Chargers',this)">Chargers</button>
+ </div>
 
-  <input class="search" id="search" placeholder="Search products..." oninput="renderProducts()">
-
-  <div class="products" id="products"></div>
+ <input class="search" id="search" placeholder="Search our collection..." oninput="render()">
+ <div class="products" id="products"></div>
 </section>
 
 <section class="about">
-  <h2>Welcome to Lala Case's</h2>
-  <p>We believe the little things make a big difference. Find accessories that complement your style, protect your devices and make every day feel special. Thank you for shopping with us.</p>
+ <h2>A little something for your style.</h2>
+ <p>Welcome to Lala Case's, your destination for stylish phone cases and everyday tech accessories. We believe your devices should express your personality. Find something beautiful, make it yours and enjoy every detail.</p>
+</section>
+
+<section class="newsletter">
+ <h2>Let's stay connected.</h2>
+ <p>Have a question or need help choosing an accessory? Chat with us directly on WhatsApp.</p>
+ <br>
+ <button class="dark-btn" onclick="contactUs()">CONTACT US</button>
 </section>
 
 <footer>
-  <div class="logo">LALA <span>CASE'S</span></div>
-  <p>STYLE YOUR DEVICE. EXPRESS YOURSELF.</p>
-  <p>© <span id="year"></span> Lala Case's. All rights reserved.</p>
+ <div class="logo">LALA <span>CASE'S</span></div>
+ <p>STYLE YOUR DEVICE. EXPRESS YOURSELF.</p>
+ <p>© <span id="year"></span> Lala Case's. All rights reserved.</p>
 </footer>
 
 <div class="overlay" id="overlay" onclick="closeCart()"></div>
-<aside class="cart-panel" id="cart">
-  <div class="cart-head">
-    <h2>Your shopping bag</h2>
-    <button class="close" onclick="closeCart()">×</button>
-  </div>
-  <div id="cart-items"></div>
-  <div class="cart-total"><span>Total</span><span id="cart-total">₦0</span></div>
-  <button class="checkout" onclick="checkout()">ORDER VIA WHATSAPP</button>
+
+<aside class="cart" id="cart">
+ <div class="cart-head">
+  <h2>Your shopping bag</h2>
+  <button class="close" onclick="closeCart()">×</button>
+ </div>
+ <div id="cart-items"></div>
+ <div class="total"><span>Total</span><span id="total">₦0</span></div>
+ <button class="checkout" onclick="checkout()">ORDER VIA WHATSAPP</button>
+ <p class="cart-note">Your order will be sent directly to Lala Case's WhatsApp for confirmation.</p>
 </aside>
 
 <script>
-const WHATSAPP_NUMBER = "234XXXXXXXXXX"; // Replace with the business WhatsApp number
+const WHATSAPP_NUMBER = "2349044413054";
 
 const products = [
-  {id:1,name:"Elegant Phone Case",category:"Phone Cases",price:8500,emoji:"📱",tag:"BESTSELLER"},
-  {id:2,name:"Classic Protective Case",category:"Phone Cases",price:10000,emoji:"💗",tag:"NEW"},
-  {id:3,name:"Premium iPad Case",category:"iPad Cases",price:18000,emoji:"📔",tag:""},
-  {id:4,name:"Stylish iPad Cover",category:"iPad Cases",price:16000,emoji:"✨",tag:""},
-  {id:5,name:"Fast Charging Adapter",category:"Chargers",price:12000,emoji:"🔌",tag:""},
-  {id:6,name:"Everyday Charging Cable",category:"Chargers",price:6500,emoji:"⚡",tag:""}
+ {id:1,name:"Elegant Phone Case",category:"Phone Cases",price:8500,oldPrice:10000,emoji:"📱",tag:"SALE"},
+ {id:2,name:"Premium Protective Case",category:"Phone Cases",price:10000,oldPrice:0,emoji:"💗",tag:"NEW"},
+ {id:3,name:"Luxury iPad Case",category:"iPad Cases",price:18000,oldPrice:22000,emoji:"📔",tag:"SALE"},
+ {id:4,name:"Classic iPad Cover",category:"iPad Cases",price:16000,oldPrice:0,emoji:"✨",tag:""},
+ {id:5,name:"Fast Charging Adapter",category:"Chargers",price:12000,oldPrice:15000,emoji:"🔌",tag:"SALE"},
+ {id:6,name:"Charging Cable",category:"Chargers",price:6500,oldPrice:0,emoji:"⚡",tag:""}
 ];
 
-let cart = [];
-let activeCategory = "All";
+let cartItems=[];
+let activeCategory="All";
 
-function money(value) {
-  return "₦" + value.toLocaleString("en-NG");
+function money(n){
+ return "₦"+n.toLocaleString("en-NG");
 }
 
-function renderProducts() {
-  const search = document.getElementById("search").value.toLowerCase();
-  const filtered = products.filter(p =>
-    (activeCategory === "All" || p.category === activeCategory) &&
-    p.name.toLowerCase().includes(search)
-  );
-
-  const area = document.getElementById("products");
-  if (!filtered.length) {
-    area.innerHTML = '<div class="empty">No products found. Please try another search.</div>';
-    return;
-  }
-
-  area.innerHTML = filtered.map(p => `
-    <article class="product">
-      <div class="product-image">
-        ${p.tag ? `<span class="tag">${p.tag}</span>` : ""}
-        <span class="symbol">${p.emoji}</span>
-      </div>
-      <div class="product-info">
-        <h3>${p.name}</h3>
-        <span class="price">${money(p.price)}</span>
-        <button class="add-btn" onclick="addToCart(${p.id})">Add to bag +</button>
-      </div>
-    </article>
-  `).join("");
+function render(){
+ const term=document.getElementById("search").value.toLowerCase();
+ const list=products.filter(p=>
+  (activeCategory==="All"||p.category===activeCategory)&&
+  p.name.toLowerCase().includes(term)
+ );
+ const area=document.getElementById("products");
+ if(!list.length){
+  area.innerHTML='<div class="empty">No products found.</div>';
+  return;
+ }
+ area.innerHTML=list.map(p=>`
+  <article class="product">
+   <div class="product-image">
+    ${p.tag?`<span class="tag">${p.tag}</span>`:""}
+    <span class="emoji">${p.emoji}</span>
+   </div>
+   <div class="product-info">
+    <h3>${p.name}</h3>
+    <span class="price">${money(p.price)}</span>
+    ${p.oldPrice?`<span class="old-price">${money(p.oldPrice)}</span>`:""}
+    <small>${p.category}</small>
+    <button class="add-btn" onclick="add(${p.id})">ADD TO BAG +</button>
+   </div>
+  </article>
+ `).join("");
 }
 
-function filterProducts(category,button) {
-  activeCategory = category;
-  document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
-  button.classList.add("active");
-  renderProducts();
+function filter(category,button){
+ activeCategory=category;
+ document.querySelectorAll(".category").forEach(b=>b.classList.remove("active"));
+ button.classList.add("active");
+ render();
 }
 
-function addToCart(id) {
-  const item = cart.find(p=>p.id===id);
-  if (item) item.quantity++;
-  else cart.push({...products.find(p=>p.id===id),quantity:1});
-  updateCart();
-  openCart();
+function add(id){
+ const p=products.find(x=>x.id===id);
+ const existing=cartItems.find(x=>x.id===id);
+ if(existing)existing.quantity++;
+ else cartItems.push({...p,quantity:1});
+ updateCart();
+ openCart();
 }
 
-function updateCart() {
-  const count = cart.reduce((sum,p)=>sum+p.quantity,0);
-  document.getElementById("cart-count").textContent = count;
-  document.getElementById("cart-items").innerHTML = cart.length
-    ? cart.map(p=>`
-      <div class="cart-item">
-        <div>
-          <strong>${p.name}</strong><br>
-          ${money(p.price)}
-          <div class="quantity">
-            <button onclick="changeQty(${p.id},-1)">−</button>
-            <span>${p.quantity}</span>
-            <button onclick="changeQty(${p.id},1)">+</button>
-          </div>
-        </div>
-        <strong>${money(p.price*p.quantity)}</strong>
-      </div>
-    `).join("")
-    : '<p style="padding:25px 0;color:#81777b">Your shopping bag is empty.</p>';
+function updateCart(){
+ document.getElementById("count").textContent=
+ cartItems.reduce((s,p)=>s+p.quantity,0);
 
-  const total = cart.reduce((sum,p)=>sum+p.price*p.quantity,0);
-  document.getElementById("cart-total").textContent = money(total);
+ document.getElementById("cart-items").innerHTML=cartItems.length?
+ cartItems.map(p=>`
+  <div class="cart-item">
+   <div>
+    <strong>${p.name}</strong><br>${money(p.price)}
+    <div class="quantity">
+     <button onclick="changeQty(${p.id},-1)">−</button>
+     <span>${p.quantity}</span>
+     <button onclick="changeQty(${p.id},1)">+</button>
+    </div>
+   </div>
+   <strong>${money(p.price*p.quantity)}</strong>
+  </div>
+ `).join(""):'<p style="padding:25px 0;color:#82777c">Your shopping bag is empty.</p>';
+
+ const total=cartItems.reduce((s,p)=>s+p.price*p.quantity,0);
+ document.getElementById("total").textContent=money(total);
 }
 
-function changeQty(id,change) {
-  const item = cart.find(p=>p.id===id);
-  if (!item) return;
-  item.quantity += change;
-  if (item.quantity <= 0) cart = cart.filter(p=>p.id!==id);
-  updateCart();
+function changeQty(id,amount){
+ const item=cartItems.find(p=>p.id===id);
+ if(!item)return;
+ item.quantity+=amount;
+ if(item.quantity<=0)cartItems=cartItems.filter(p=>p.id!==id);
+ updateCart();
 }
 
-function openCart() {
-  document.getElementById("cart").classList.add("open");
-  document.getElementById("overlay").classList.add("show");
+function openCart(){
+ document.getElementById("cart").classList.add("open");
+ document.getElementById("overlay").classList.add("show");
 }
-function closeCart() {
-  document.getElementById("cart").classList.remove("open");
-  document.getElementById("overlay").classList.remove("show");
-}
-
-function checkout() {
-  if (!cart.length) {
-    alert("Your shopping bag is empty.");
-    return;
-  }
-  if (!/^234\d{10}$/.test(WHATSAPP_NUMBER)) {
-    alert("The store owner needs to add the correct WhatsApp number to the website first.");
-    return;
-  }
-  const lines = cart.map(p=>`${p.name} x ${p.quantity} - ${money(p.price*p.quantity)}`);
-  const total = cart.reduce((sum,p)=>sum+p.price*p.quantity,0);
-  const message = "Hello Lala Case's! I would like to place an order:\n\n" +
-    lines.join("\n") + "\n\nTotal: " + money(total) +
-    "\n\nPlease let me know how to complete my order.";
-  window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),"_blank");
+function closeCart(){
+ document.getElementById("cart").classList.remove("open");
+ document.getElementById("overlay").classList.remove("show");
 }
 
-document.getElementById("year").textContent = new Date().getFullYear();
-renderProducts();
+function contactUs(){
+ const message="Hello Lala Case's! I would like to make an enquiry.";
+ window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),"_blank");
+}
+
+function checkout(){
+ if(!cartItems.length){
+  alert("Your shopping bag is empty.");
+  return;
+ }
+ const lines=cartItems.map(p=>
+  p.name+" x "+p.quantity+" = "+money(p.price*p.quantity)
+ );
+ const total=cartItems.reduce((s,p)=>s+p.price*p.quantity,0);
+ const message="Hello Lala Case's! I would like to place an order:\n\n"+
+ lines.join("\n")+"\n\nTOTAL: "+money(total)+
+ "\n\nPlease let me know how to complete my order.";
+ window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(message),"_blank");
+}
+
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
 updateCart();
 </script>
 </body>
