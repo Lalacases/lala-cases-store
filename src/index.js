@@ -26,33 +26,47 @@ async function sign(value, secret) {
     false,
     ["sign"]
   );
+
   return base64url(await crypto.subtle.sign(
-    "HMAC", key, new TextEncoder().encode(value)
+    "HMAC",
+    key,
+    new TextEncoder().encode(value)
   ));
 }
 
 async function createSession(env) {
   const payload = base64url(new TextEncoder().encode(
-    JSON.stringify({ user: env.ADMIN_USERNAME, exp: Date.now() + 28800000 })
+    JSON.stringify({
+      user: env.ADMIN_USERNAME,
+      exp: Date.now() + 28800000
+    })
   ));
+
   return payload + "." + await sign(payload, env.SESSION_SECRET);
 }
 
 async function checkSession(request, env) {
   const cookie = request.headers.get("Cookie") || "";
   const match = cookie.match(/lala_admin=([^;]+)/);
+
   if (!match || !env.SESSION_SECRET) return false;
 
   const parts = match[1].split(".");
   if (parts.length !== 2) return false;
 
   const expected = await sign(parts[0], env.SESSION_SECRET);
+
   if (expected !== parts[1]) return false;
 
   try {
-    const payload = JSON.parse(
-      atob(parts[0].replace(/-/g, "+").replace(/_/g, "/"))
-    );
+    let encoded = parts[0]
+      .replace(/-/g, "+")
+      .replace(/_/g, "/");
+
+    encoded += "=".repeat((4 - encoded.length % 4) % 4);
+
+    const payload = JSON.parse(atob(encoded));
+
     return payload.user === env.ADMIN_USERNAME &&
       payload.exp > Date.now();
   } catch {
@@ -82,65 +96,164 @@ export default {
     const method = request.method;
 
     if (path.startsWith("/api/")) {
-      if (!env.DB) return json({ error: "Database binding DB is missing." }, 500);
+      if (!env.DB) {
+        return json({
+          error: "Database binding DB is missing."
+        }, 500);
+      }
 
       try {
         await setupDB(env);
 
+        // ADMIN LOGIN
         if (path === "/api/login" && method === "POST") {
-          if (!env.ADMIN_USERNAME || !env.ADMIN_PASSWORD || !env.SESSION_SECRET) {
-            return json({ error: "Admin secrets are not configured." }, 500);
+          if (
+            !env.ADMIN_USERNAME ||
+            !env.ADMIN_PASSWORD ||
+            !env.SESSION_SECRET
+          ) {
+            return json({
+              error: "Admin secrets are not configured."
+            }, 500);
           }
 
           const body = await request.json();
+
           if (
             body.username !== env.ADMIN_USERNAME ||
             body.password !== env.ADMIN_PASSWORD
           ) {
-            return json({ error: "Incorrect username or password." }, 401);
+            return json({
+              error: "Incorrect username or password."
+            }, 401);
           }
 
           const token = await createSession(env);
-          return new Response(JSON.stringify({ success: true }), {
-            headers: {
-              ...corsHeaders,
-              "Set-Cookie": `lala_admin=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800`
+
+          return new Response(
+            JSON.stringify({ success: true }),
+            {
+              headers: {
+                ...corsHeaders,
+                "Set-Cookie":
+                  `lala_admin=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800`
+              }
             }
-          });
+          );
         }
 
+        // ADMIN LOGOUT
         if (path === "/api/logout" && method === "POST") {
-          return new Response(JSON.stringify({ success: true }), {
-            headers: {
-              ...corsHeaders,
-              "Set-Cookie": "lala_admin=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0"
+          return new Response(
+            JSON.stringify({ success: true }),
+            {
+              headers: {
+                ...corsHeaders,
+                "Set-Cookie":
+                  "lala_admin=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0"
+              }
             }
+          );
+        }
+
+        // CHECK ADMIN SESSION
+        if (path === "/api/me" && method === "GET") {
+          return json({
+            authenticated: await checkSession(request, env)
           });
         }
 
-        if (path === "/api/me" && method === "GET") {
-          return json({ authenticated: await checkSession(request, env) });
+        // SECURE CLOUDINARY UPLOAD SIGNATURE
+        if (
+          path === "/api/cloudinary-signature" &&
+          method === "POST"
+        ) {
+          const authenticated = await checkSession(request, env);
+
+          if (!authenticated) {
+            return json({
+              error: "Private admin access required."
+            }, 401);
+          }
+
+          if (
+            !env.CLOUDINARY_CLOUD_NAME ||
+            !env.CLOUDINARY_API_KEY ||
+            !env.CLOUDINARY_API_SECRET
+          ) {
+            return json({
+              error: "Cloudinary settings are missing."
+            }, 500);
+          }
+
+          const timestamp = Math.floor(Date.now() / 1000);
+
+          const toSign =
+            "timestamp=" +
+            timestamp +
+            env.CLOUDINARY_API_SECRET;
+
+          const digest = await crypto.subtle.digest(
+            "SHA-1",
+            new TextEncoder().encode(toSign)
+          );
+
+          const signature = Array.from(
+            new Uint8Array(digest)
+          )
+            .map(byte => byte.toString(16).padStart(2, "0"))
+            .join("");
+
+          return json({
+            timestamp,
+            signature,
+            api_key: env.CLOUDINARY_API_KEY,
+            cloud_name: env.CLOUDINARY_CLOUD_NAME
+          });
         }
 
-        if (path === "/api/products" && method === "GET") {
+        // GET ALL PRODUCTS
+        if (
+          path === "/api/products" &&
+          method === "GET"
+        ) {
           const result = await env.DB.prepare(
             "SELECT * FROM products ORDER BY created_at DESC"
           ).all();
-          return json({ products: result.results || [] });
+
+          return json({
+            products: result.results || []
+          });
         }
 
+        // REQUIRE ADMIN LOGIN FOR PRODUCT CHANGES
         const authenticated = await checkSession(request, env);
+
         if (!authenticated) {
-          return json({ error: "Private admin access required." }, 401);
+          return json({
+            error: "Private admin access required."
+          }, 401);
         }
 
-        if (path === "/api/products" && method === "POST") {
+        // ADD PRODUCT
+        if (
+          path === "/api/products" &&
+          method === "POST"
+        ) {
           const body = await request.json();
-          if (!body.name || !body.category || !Number.isFinite(Number(body.price))) {
-            return json({ error: "Name, category and valid price are required." }, 400);
+
+          if (
+            !body.name ||
+            !body.category ||
+            !Number.isFinite(Number(body.price))
+          ) {
+            return json({
+              error: "Name, category and valid price are required."
+            }, 400);
           }
 
           const id = crypto.randomUUID();
+
           await env.DB.prepare(`
             INSERT INTO products
             (id, name, description, price, category, image_url, stock)
@@ -155,16 +268,28 @@ export default {
             Math.max(0, Number(body.stock) || 0)
           ).run();
 
-          return json({ success: true, id }, 201);
+          return json({
+            success: true,
+            id
+          }, 201);
         }
 
-        const productMatch = path.match(/^\/api\/products\/([a-zA-Z0-9-]+)$/);
+        const productMatch = path.match(
+          /^\/api\/products\/([a-zA-Z0-9-]+)$/
+        );
 
-        if (productMatch && method === "PUT") {
+        // EDIT PRODUCT
+        if (
+          productMatch &&
+          method === "PUT"
+        ) {
           const body = await request.json();
+
           await env.DB.prepare(`
-            UPDATE products SET name=?, description=?, price=?,
-            category=?, image_url=?, stock=? WHERE id=?
+            UPDATE products
+            SET name=?, description=?, price=?,
+                category=?, image_url=?, stock=?
+            WHERE id=?
           `).bind(
             String(body.name),
             String(body.description || ""),
@@ -175,24 +300,37 @@ export default {
             productMatch[1]
           ).run();
 
-          return json({ success: true });
+          return json({
+            success: true
+          });
         }
 
-        if (productMatch && method === "DELETE") {
+        // DELETE PRODUCT
+        if (
+          productMatch &&
+          method === "DELETE"
+        ) {
           await env.DB.prepare(
             "DELETE FROM products WHERE id=?"
           ).bind(productMatch[1]).run();
 
-          return json({ success: true });
+          return json({
+            success: true
+          });
         }
 
-        return json({ error: "API route not found." }, 404);
+        return json({
+          error: "API route not found."
+        }, 404);
 
       } catch (error) {
-        return json({ error: "Server error. Check Worker logs." }, 500);
+        return json({
+          error: "Server error. Check Worker logs."
+        }, 500);
       }
     }
 
+    // SERVE WEBSITE FILES
     return env.ASSETS.fetch(request);
   }
 };
