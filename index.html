@@ -17,54 +17,39 @@
  --border:#f0dce4;
 }
 body{
- margin:0;
- background:#fffafb;
- color:var(--dark);
+ margin:0;background:#fffafb;color:var(--dark);
  font-family:Arial,sans-serif;
 }
 header{
  position:sticky;top:0;z-index:10;
- background:white;
- border-bottom:1px solid var(--border);
- padding:15px 5%;
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:12px;
+ background:white;border-bottom:1px solid var(--border);
+ padding:15px 5%;display:flex;
+ justify-content:space-between;align-items:center;gap:12px;
 }
 .logo{font-size:20px;font-weight:900;letter-spacing:2px}
 .logo small{
- display:block;color:var(--pink);
- font-size:10px;letter-spacing:3px;margin-top:4px;
+ display:block;color:var(--pink);font-size:10px;
+ letter-spacing:3px;margin-top:4px;
 }
 nav{display:flex;gap:17px;align-items:center}
-nav a{
- color:var(--dark);text-decoration:none;
- font-size:13px;font-weight:bold;
-}
+nav a{color:var(--dark);text-decoration:none;font-size:13px;font-weight:bold}
 .cart-button{
- background:var(--dark);color:white;
- border:0;padding:11px 15px;border-radius:25px;
- font-weight:bold;cursor:pointer;
+ background:var(--dark);color:white;border:0;
+ padding:11px 15px;border-radius:25px;font-weight:bold;cursor:pointer;
 }
 .hero{
- padding:65px 20px;
- text-align:center;
+ padding:65px 20px;text-align:center;
  background:linear-gradient(135deg,#f8e8ef,#fffafb,#fbeef3);
 }
-.eyebrow{
- color:var(--pink);font-size:11px;
- letter-spacing:3px;font-weight:bold;
-}
+.eyebrow{color:var(--pink);font-size:11px;letter-spacing:3px;font-weight:bold}
 .hero h1{font-size:clamp(32px,7vw,55px);margin:14px 0}
 .hero p{
  max-width:500px;margin:0 auto 22px;
  color:#786b71;line-height:1.7;font-size:15px;
 }
 .shop-link{
- display:inline-block;background:var(--dark);
- color:white;text-decoration:none;
- padding:14px 24px;border-radius:30px;
+ display:inline-block;background:var(--dark);color:white;
+ text-decoration:none;padding:14px 24px;border-radius:30px;
  font-size:13px;font-weight:bold;
 }
 main{max-width:1150px;margin:35px auto;padding:0 17px}
@@ -72,22 +57,16 @@ main{max-width:1150px;margin:35px auto;padding:0 17px}
 .section-heading h2{font-size:25px;margin:8px 0}
 .section-heading p{color:#786b71;font-size:13px}
 .filters{
- display:flex;justify-content:center;
- flex-wrap:wrap;gap:9px;margin-bottom:25px;
+ display:flex;justify-content:center;flex-wrap:wrap;
+ gap:9px;margin-bottom:25px;
 }
 .filters button{
- border:1px solid var(--border);
- background:white;color:var(--dark);
- padding:10px 16px;border-radius:25px;
- cursor:pointer;font-size:12px;
+ border:1px solid var(--border);background:white;color:var(--dark);
+ padding:10px 16px;border-radius:25px;cursor:pointer;font-size:12px;
 }
-.filters button.active{
- background:var(--dark);color:white;
-}
+.filters button.active{background:var(--dark);color:white}
 .product-grid{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:20px;
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;
 }
 .card{
  background:white;border:1px solid var(--border);
@@ -99,37 +78,29 @@ main{max-width:1150px;margin:35px auto;padding:0 17px}
 }
 .card-content{padding:15px}
 .category{
- color:var(--pink);font-size:10px;
- font-weight:bold;letter-spacing:1px;
- text-transform:uppercase;
+ color:var(--pink);font-size:10px;font-weight:bold;
+ letter-spacing:1px;text-transform:uppercase;
 }
 .card h3{font-size:15px;margin:8px 0}
 .description{
- color:#786b71;font-size:12px;
- line-height:1.5;min-height:35px;
+ color:#786b71;font-size:12px;line-height:1.5;min-height:35px;
 }
 .price{font-size:17px;font-weight:bold;margin:12px 0}
 .card-actions{display:flex;gap:8px}
 .card-actions button{
- flex:1;padding:11px 8px;border:0;
- border-radius:8px;font-weight:bold;
- cursor:pointer;font-size:12px;
+ flex:1;padding:11px 8px;border:0;border-radius:8px;
+ font-weight:bold;cursor:pointer;font-size:12px;
 }
 .add-button{background:var(--dark);color:white}
 .buy-button{background:#f8e8ef;color:var(--dark)}
-.gallery{
- display:flex;gap:6px;padding:0 12px 12px;
- overflow-x:auto;
-}
+.gallery{display:flex;gap:6px;padding:0 12px 12px;overflow-x:auto}
 .gallery img{
- width:48px;height:48px;object-fit:cover;
- border-radius:7px;cursor:pointer;
- border:2px solid transparent;
+ width:48px;height:48px;object-fit:cover;border-radius:7px;
+ cursor:pointer;border:2px solid transparent;
 }
 .gallery img.selected{border-color:var(--pink)}
 .empty{
- text-align:center;padding:45px 15px;
- color:#786b71;grid-column:1/-1;
+ text-align:center;padding:45px 15px;color:#786b71;grid-column:1/-1;
 }
 footer{
  margin-top:55px;background:var(--dark);
@@ -137,6 +108,11 @@ footer{
 }
 footer p{font-size:13px;color:#e8dce1;line-height:1.7}
 footer a{color:#f3b8d0;text-decoration:none}
+.contact-button{
+ display:inline-block;background:var(--pink);color:white;
+ padding:13px 22px;border-radius:25px;text-decoration:none;
+ font-size:13px;font-weight:bold;margin-top:8px;
+}
 .cart-overlay{
  position:fixed;inset:0;background:#0008;
  z-index:30;display:none;
@@ -148,22 +124,18 @@ footer a{color:#f3b8d0;text-decoration:none}
  padding:20px;overflow-y:auto;
 }
 .cart-header{
- display:flex;justify-content:space-between;
- align-items:center;border-bottom:1px solid var(--border);
- padding-bottom:15px;
+ display:flex;justify-content:space-between;align-items:center;
+ border-bottom:1px solid var(--border);padding-bottom:15px;
 }
 .close{
- border:0;background:var(--light);
- padding:10px 13px;border-radius:8px;
- cursor:pointer;
+ border:0;background:var(--light);padding:10px 13px;
+ border-radius:8px;cursor:pointer;
 }
 .cart-item{
  display:flex;gap:12px;align-items:center;
  padding:13px 0;border-bottom:1px solid var(--border);
 }
-.cart-item img{
- width:65px;height:65px;object-fit:cover;border-radius:9px;
-}
+.cart-item img{width:65px;height:65px;object-fit:cover;border-radius:9px}
 .cart-info{flex:1;min-width:0}
 .cart-info strong{font-size:13px}
 .cart-info small{display:block;color:#786b71;margin-top:5px}
@@ -179,14 +151,10 @@ footer a{color:#f3b8d0;text-decoration:none}
 }
 .checkout{
  width:100%;padding:15px;background:var(--pink);
- color:white;border:0;border-radius:9px;
- font-weight:bold;cursor:pointer;
+ color:white;border:0;border-radius:9px;font-weight:bold;cursor:pointer;
 }
 .checkout:disabled{opacity:.5}
-.notice{
- color:#786b71;font-size:11px;line-height:1.5;
- margin-top:12px;
-}
+.notice{color:#786b71;font-size:11px;line-height:1.5;margin-top:12px}
 @media(max-width:750px){
  .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
  .product-image{height:190px}
@@ -251,6 +219,10 @@ footer a{color:#f3b8d0;text-decoration:none}
  <div class="logo">LALA CASE'S</div>
  <p>Beautiful accessories. Stylish everyday living.</p>
  <p>For enquiries and orders, contact us on WhatsApp.</p>
+ <a class="contact-button"
+ href="https://wa.me/2349044413054" target="_blank">
+  CHAT WITH US ON WHATSAPP
+ </a>
  <p>
   <a href="https://www.tiktok.com/@lala.cases2" target="_blank">
    Follow us on TikTok
@@ -274,15 +246,13 @@ footer a{color:#f3b8d0;text-decoration:none}
    ORDER VIA WHATSAPP
   </button>
   <p class="notice">
-   Your order will be sent to our WhatsApp for confirmation.
+   Your order will be sent to our official WhatsApp number for confirmation.
   </p>
  </div>
 </div>
 
 <script>
-// CHANGE THIS TO THE STORE'S CORRECT WHATSAPP NUMBER.
-// Use country code without + or spaces.
-const WHATSAPP_NUMBER = "2348081040811";
+const WHATSAPP_NUMBER = "2349044413054";
 
 const money = value =>
  "₦" + Number(value || 0).toLocaleString("en-NG");
@@ -302,15 +272,13 @@ async function loadProducts(){
  area.innerHTML = '<div class="empty">Loading products...</div>';
 
  try{
-  const response = await fetch("/api/products", {
-   cache:"no-store"
-  });
-
+  const response = await fetch("/api/products",{cache:"no-store"});
   if(!response.ok) throw new Error("Could not load products.");
 
   const data = await response.json();
-  products = (data.products || []).filter(p => Number(p.stock || 0) > 0);
-
+  products = (data.products || []).filter(
+   p => Number(p.stock || 0) > 0
+  );
   renderProducts();
  }catch(error){
   area.innerHTML = `
@@ -524,21 +492,16 @@ document.getElementById("cartOverlay").addEventListener("click",event=>{
  if(event.target.id==="cartOverlay")closeCart();
 });
 
-document.getElementById("checkout").addEventListener("click",()=>{
- if(!cart.length)return;
+function sendWhatsAppOrder(items){
+ if(!items.length)return;
 
- if(WHATSAPP_NUMBER==="2348081040811"){
-  // This is the current placeholder number.
-  // Confirm it is the correct store number before accepting orders.
- }
-
- const total = cart.reduce(
+ const total = items.reduce(
   (sum,item)=>sum+Number(item.price)*item.quantity,0
  );
 
  let message = "Hello Lala Case's! I would like to place an order:\n\n";
 
- cart.forEach((item,index)=>{
+ items.forEach((item,index)=>{
   message += `${index+1}. ${item.name}\n`;
   message += `Quantity: ${item.quantity}\n`;
   message += `Price: ${money(item.price)} each\n\n`;
@@ -550,6 +513,10 @@ document.getElementById("checkout").addEventListener("click",()=>{
   "?text="+encodeURIComponent(message);
 
  window.open(url,"_blank");
+}
+
+document.getElementById("checkout").addEventListener("click",()=>{
+ sendWhatsAppOrder(cart);
 });
 
 document.getElementById("year").textContent = new Date().getFullYear();
